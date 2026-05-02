@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SENTINEL — the aerial phenomenon monitoring network</title>
+  <meta name="description" content="SENTINEL is a citizen-powered aerial monitoring network using distributed radar and blockchain-verified data to document UAPs, identify unknown drones, and pursue the most important scientific question of our era." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cyan: #00B4D8;
+      --cyan-dim: rgba(0,180,216,0.12);
+      --navy: #0A1628;
+      --white: #F0F8FF;
+      --muted: #6B8FA8;
+      --green: #00E676;
+      --gold: #FFD700;
+      --red: #FF4444;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Barlow', sans-serif; background: var(--navy); color: var(--white); line-height: 1.75; overflow-x: hidden; }
+
+    /* WIP BANNER */
+    .wip-banner { background: linear-gradient(90deg,#0a1f0a,#0d2a0d,#0a1f0a); border-bottom: 1px solid rgba(0,230,118,0.35); padding: 9px 24px; text-align: center; font-size: 0.78rem; color: #69F0AE; letter-spacing: 1.5px; position: relative; z-index: 200; }
+    .wip-banner strong { color: #fff; }
+    .wip-dot { display: inline-block; width: 7px; height: 7px; background: var(--green); border-radius: 50%; margin-right: 8px; vertical-align: middle; animation: blink 1.8s ease-in-out infinite; box-shadow: 0 0 6px var(--green); }
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
+    .wip-banner a { color: var(--cyan); font-weight: 600; text-decoration: none; margin-left: 6px; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; background: rgba(10,22,40,0.97); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(0,180,216,0.2); padding: 13px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 150; }
+    .nav-logo { font-family: 'Orbitron',monospace; font-size: 1.15rem; font-weight: 900; letter-spacing: 5px; color: var(--cyan); text-shadow: 0 0 20px rgba(0,180,216,0.4); }
+    .nav-links { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; transition: color 0.2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-usa { font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); font-weight: 700; border: 1px solid rgba(255,215,0,0.3); padding: 5px 10px; border-radius: 3px; background: rgba(255,215,0,0.05); white-space: nowrap; }
+
+    /* HERO */
+    .hero { position: relative; height: 100vh; min-height: 700px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: -80px; background: url('hero-bg.jpg') center center / cover no-repeat; will-change: transform; z-index: 0; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom,rgba(10,22,40,0.25) 0%,rgba(10,22,40,0.15) 25%,rgba(10,22,40,0.5) 70%,rgba(10,22,40,0.98) 100%); z-index: 1; }
+    .hero-content { position: relative; z-index: 2; max-width: 860px; padding: 0 24px; }
+    .hero-eyebrow { font-size: 0.68rem; letter-spacing: 6px; text-transform: uppercase; color: var(--cyan); margin-bottom: 20px; font-weight: 600; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
+    .hero-title { font-family: 'Orbitron',monospace; font-size: clamp(3.2rem,10vw,7rem); font-weight: 900; letter-spacing: 12px; color: #fff; text-shadow: 0 0 80px rgba(0,180,216,0.35),0 2px 40px rgba(0,0,0,0.9); margin-bottom: 14px; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
+    .hero-dash { width: 60px; height: 2px; background: var(--cyan); margin: 0 auto 18px; box-shadow: 0 0 12px var(--cyan); opacity: 0; animation: fadeUp 1s ease 0.7s forwards; }
+    .hero-subtitle { font-size: clamp(0.85rem,2vw,1rem); letter-spacing: 2px; color: rgba(240,248,255,0.9); text-transform: uppercase; margin-bottom: 10px; font-weight: 300; opacity: 0; animation: fadeUp 1s ease 0.9s forwards; }
+    .hero-subtitle-small { font-size: 0.68rem; letter-spacing: 2px; color: var(--cyan); text-transform: uppercase; margin-bottom: 32px; font-weight: 600; opacity: 0; animation: fadeUp 1s ease 1s forwards; line-height: 1.9; }
+    .hero-question { font-size: clamp(1rem,2.5vw,1.15rem); color: rgba(240,248,255,0.75); font-style: italic; font-weight: 300; margin-bottom: 44px; line-height: 1.7; opacity: 0; animation: fadeUp 1s ease 1.1s forwards; }
+    .hero-question em { color: var(--cyan); font-style: normal; font-weight: 600; }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 1s ease 1.3s forwards; }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+    /* BUTTONS */
+    .btn-primary { background: var(--cyan); color: var(--navy); padding: 13px 30px; border-radius: 3px; text-decoration: none; font-family: 'Orbitron',monospace; font-weight: 700; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; transition: all 0.2s; box-shadow: 0 0 24px rgba(0,180,216,0.35); border: none; cursor: pointer; display: inline-block; }
+    .btn-primary:hover { background: #90E0EF; transform: translateY(-2px); }
+    .btn-secondary { border: 1px solid var(--cyan); color: var(--cyan); padding: 13px 30px; border-radius: 3px; text-decoration: none; font-family: 'Orbitron',monospace; font-weight: 700; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; transition: all 0.2s; background: transparent; display: inline-block; }
+    .btn-secondary:hover { background: var(--cyan-dim); transform: translateY(-2px); }
+
+    /* USA STRIP */
+    .usa-strip { background: linear-gradient(90deg,rgba(0,10,30,0.9),rgba(0,30,60,0.6),rgba(0,10,30,0.9)); border-top: 1px solid rgba(255,215,0,0.18); border-bottom: 1px solid rgba(255,215,0,0.18); padding: 18px 24px; display: flex; justify-content: center; align-items: center; gap: 28px; flex-wrap: wrap; }
+    .usa-item { display: flex; align-items: center; gap: 8px; font-size: 0.68rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); font-weight: 700; font-family: 'Orbitron',monospace; white-space: nowrap; }
+    .usa-dot { width: 3px; height: 3px; background: rgba(255,215,0,0.25); border-radius: 50%; flex-shrink: 0; }
+
+    /* GENERAL */
+    .section-wrap { padding: 90px 24px; max-width: 1040px; margin: 0 auto; }
+    .section-label { font-family: 'Orbitron',monospace; font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
+    h2 { font-family: 'Orbitron',monospace; font-size: clamp(1.5rem,4vw,2.3rem); font-weight: 700; color: #fff; margin-bottom: 24px; line-height: 1.25; letter-spacing: 2px; }
+    .body-text { color: #8BAFC8; font-size: 1rem; margin-bottom: 20px; max-width: 740px; font-weight: 300; line-height: 1.8; }
+    .divider { border: none; border-top: 1px solid rgba(0,180,216,0.1); max-width: 1040px; margin: 0 auto; }
+    .callout { border-left: 3px solid var(--cyan); background: rgba(0,180,216,0.05); padding: 22px 28px; margin: 32px 0; border-radius: 0 4px 4px 0; }
+    .callout p { font-size: 1.05rem; font-style: italic; color: rgba(240,248,255,0.88); margin: 0; font-weight: 300; line-height: 1.7; }
+    .callout-red { border-left: 3px solid #FF6B6B; background: rgba(255,80,80,0.05); padding: 22px 28px; margin: 32px 0; border-radius: 0 4px 4px 0; }
+    .callout-red p { font-size: 1.05rem; font-style: italic; color: rgba(240,248,255,0.88); margin: 0; font-weight: 300; line-height: 1.7; }
+
+    /* THE QUESTION */
+    .question-section { padding: 100px 24px; text-align: center; }
+    .question-inner { max-width: 800px; margin: 0 auto; }
+    .question-label { font-family: 'Orbitron',monospace; font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px; }
+    .question-text { font-size: clamp(1.6rem,4vw,2.6rem); font-weight: 300; color: var(--white); line-height: 1.5; margin-bottom: 32px; font-style: italic; }
+    .question-text strong { font-weight: 700; color: var(--cyan); font-style: normal; }
+    .question-body { font-size: 1.05rem; color: #8BAFC8; font-weight: 300; line-height: 1.8; margin-bottom: 20px; text-align: left; }
+    .question-callout { border: 1px solid rgba(0,180,216,0.25); background: rgba(0,180,216,0.05); border-radius: 4px; padding: 28px 36px; margin: 36px 0; }
+    .question-callout p { font-size: 1.1rem; font-style: italic; color: var(--white); margin: 0; font-weight: 300; line-height: 1.7; }
+
+    /* DRONE THREAT SECTION */
+    .drone-section { padding: 90px 24px; background: linear-gradient(180deg, rgba(8,14,28,1) 0%, rgba(20,8,8,0.4) 50%, rgba(8,14,28,1) 100%); border-top: 1px solid rgba(255,80,80,0.15); border-bottom: 1px solid rgba(255,80,80,0.15); }
+    .drone-inner { max-width: 1040px; margin: 0 auto; }
+    .drone-label { font-family: 'Orbitron',monospace; font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase; color: #FF6B6B; margin-bottom: 10px; }
+    .drone-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 20px; margin: 36px 0; }
+    .drone-card { background: rgba(255,80,80,0.04); border: 1px solid rgba(255,80,80,0.18); border-radius: 6px; padding: 28px 24px; transition: all 0.25s; position: relative; overflow: hidden; }
+    .drone-card::after { content:''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg,#FF6B6B,transparent); }
+    .drone-card:hover { border-color: rgba(255,80,80,0.4); background: rgba(255,80,80,0.07); transform: translateY(-3px); }
+    .drone-card-icon { font-size: 2rem; margin-bottom: 12px; }
+    .drone-card-title { font-family: 'Orbitron',monospace; font-weight: 700; color: #fff; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 10px; }
+    .drone-card-desc { font-size: 0.88rem; color: #9AAFBF; font-weight: 300; line-height: 1.7; margin: 0; }
+
+    /* DUAL MISSION STRIP */
+    .dual-mission { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 40px 0; }
+    .mission-card { border-radius: 8px; padding: 32px 28px; position: relative; overflow: hidden; }
+    .mission-card-uap { background: rgba(0,180,216,0.06); border: 1px solid rgba(0,180,216,0.25); }
+    .mission-card-drone { background: rgba(255,80,80,0.06); border: 1px solid rgba(255,80,80,0.25); }
+    .mission-card-icon { font-size: 2.2rem; margin-bottom: 14px; }
+    .mission-card-title { font-family: 'Orbitron',monospace; font-weight: 700; font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 12px; }
+    .mission-card-uap .mission-card-title { color: var(--cyan); }
+    .mission-card-drone .mission-card-title { color: #FF6B6B; }
+    .mission-card-desc { font-size: 0.88rem; color: #8BAFC8; font-weight: 300; line-height: 1.7; margin: 0; }
+
+    /* TIER CARDS */
+    .tier-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 16px; margin: 32px 0; }
+    .tier-card { background: rgba(0,180,216,0.04); border: 1px solid rgba(0,180,216,0.16); border-radius: 4px; padding: 28px 20px; text-align: center; transition: all 0.25s; }
+    .tier-card:hover { border-color: var(--cyan); background: rgba(0,180,216,0.1); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,180,216,0.14); }
+    .tier-badge { display: inline-flex; align-items: center; justify-content: center; background: var(--cyan); color: var(--navy); font-family: 'Orbitron',monospace; font-weight: 900; font-size: 1rem; width: 46px; height: 46px; border-radius: 50%; margin-bottom: 14px; }
+    .tier-name { font-family: 'Orbitron',monospace; font-weight: 700; color: #fff; margin-bottom: 8px; font-size: 0.8rem; letter-spacing: 1px; }
+    .tier-desc { font-size: 0.82rem; color: var(--muted); margin: 0; line-height: 1.6; }
+    .tier-sig { margin-top: 12px; font-size: 0.68rem; color: var(--cyan); font-weight: 700; letter-spacing: 1px; font-style: italic; }
+
+    /* MODULE CARDS */
+    .module-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(290px,1fr)); gap: 20px; margin: 32px 0; }
+    .module-card { background: rgba(0,180,216,0.03); border: 1px solid rgba(0,180,216,0.11); border-radius: 6px; padding: 28px 24px; transition: all 0.25s; position: relative; overflow: hidden; }
+    .module-card::after { content:''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg,var(--cyan),transparent); }
+    .module-card:hover { border-color: rgba(0,180,216,0.38); background: rgba(0,180,216,0.07); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,180,216,0.1); }
+    .module-header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+    .module-icon { font-size: 1.8rem; }
+    .module-title { font-family: 'Orbitron',monospace; font-weight: 700; color: #fff; font-size: 0.85rem; letter-spacing: 1px; }
+    .module-badge { display: inline-block; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; margin-bottom: 12px; font-weight: 700; font-family: 'Orbitron',monospace; }
+    .badge-core { background: rgba(0,180,216,0.14); color: var(--cyan); border: 1px solid rgba(0,180,216,0.38); }
+    .badge-opt { background: rgba(0,230,118,0.07); color: #69F0AE; border: 1px solid rgba(0,230,118,0.28); }
+    .module-desc { font-size: 0.85rem; color: #7A9DB8; margin-bottom: 14px; font-weight: 300; line-height: 1.65; }
+    .module-features { list-style: none; padding: 0; }
+    .module-features li { font-size: 0.78rem; color: #5A8A9F; padding: 5px 0; border-bottom: 1px solid rgba(0,180,216,0.06); line-height: 1.5; }
+    .module-features li:last-child { border-bottom: none; }
+    .module-features li::before { content:'→ '; color: var(--cyan); font-weight: 700; }
+
+    /* DIAGRAM */
+    .diagram-wrap { background: rgba(0,180,216,0.03); border: 1px solid rgba(0,180,216,0.15); border-radius: 8px; padding: 32px 24px; margin-top: 32px; overflow-x: auto; }
+
+    /* TEAM */
+    .team-section { padding: 90px 24px; background: rgba(0,180,216,0.02); border-top: 1px solid rgba(0,180,216,0.1); border-bottom: 1px solid rgba(0,180,216,0.1); }
+    .team-inner { max-width: 1040px; margin: 0 auto; }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 28px; margin-top: 40px; }
+    .team-card { background: rgba(0,180,216,0.04); border: 1px solid rgba(0,180,216,0.15); border-radius: 8px; padding: 36px 28px; text-align: center; position: relative; overflow: hidden; transition: all 0.25s; }
+    .team-card::before { content:''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg,transparent,var(--cyan),transparent); }
+    .team-card:hover { border-color: rgba(0,180,216,0.35); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,180,216,0.1); }
+    .team-avatar { width: 72px; height: 72px; border-radius: 50%; background: rgba(0,180,216,0.1); border: 2px solid rgba(0,180,216,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-family: 'Orbitron',monospace; font-size: 1.4rem; font-weight: 900; color: var(--cyan); }
+    .team-name { font-family: 'Orbitron',monospace; font-size: 1rem; font-weight: 700; color: #fff; letter-spacing: 2px; margin-bottom: 6px; }
+    .team-role { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px; font-weight: 600; }
+    .team-bio { font-size: 0.88rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
+    .team-tag { display: inline-block; margin-top: 16px; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; background: rgba(0,180,216,0.1); border: 1px solid rgba(0,180,216,0.25); color: var(--cyan); font-family: 'Orbitron',monospace; }
+
+    /* PROOF */
+    .proof-block { background: #030C18; border: 1px solid rgba(0,180,216,0.22); border-radius: 4px; padding: 28px 32px; font-family: 'Courier New',monospace; font-size: 0.74rem; color: var(--cyan); line-height: 2.3; word-break: break-all; margin: 32px 0; }
+    .proof-block span { color: #4A7A8A; }
+    .proof-verified { color: #69F0AE !important; font-weight: 700; }
+
+    /* INVOLVE */
+    .involve-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 18px; margin: 32px 0; }
+    .involve-card { background: rgba(0,180,216,0.03); border: 1px solid rgba(0,180,216,0.11); border-radius: 4px; padding: 28px 22px; transition: all 0.2s; }
+    .involve-card:hover { border-color: rgba(0,180,216,0.32); background: rgba(0,180,216,0.08); }
+    .involve-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .involve-title { font-family: 'Orbitron',monospace; font-weight: 700; color: #fff; margin-bottom: 8px; font-size: 0.8rem; letter-spacing: 1px; }
+    .involve-desc { font-size: 0.82rem; color: var(--muted); margin: 0; font-weight: 300; line-height: 1.65; }
+
+    /* CONTACT */
+    .contact-section { padding: 96px 24px; background: linear-gradient(180deg,var(--navy) 0%,#060F1E 100%); border-top: 1px solid rgba(0,180,216,0.09); }
+    .contact-inner { max-width: 900px; margin: 0 auto; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; margin-top: 48px; }
+    .contact-info h3 { font-family: 'Orbitron',monospace; color: var(--cyan); font-size: 0.72rem; margin-bottom: 16px; letter-spacing: 3px; text-transform: uppercase; }
+    .contact-info p { font-size: 0.88rem; color: #8BAFC8; margin-bottom: 14px; font-weight: 300; }
+    .contact-email-link { color: var(--cyan); text-decoration: none; font-size: 0.95rem; border-bottom: 1px solid rgba(0,180,216,0.3); padding-bottom: 2px; }
+    .contact-email-link:hover { border-color: var(--cyan); }
+    .contact-meta { margin-top: 28px; font-size: 0.75rem; color: var(--muted); line-height: 2.1; }
+    .contact-meta strong { color: #69F0AE; }
+    .contact-form h3 { font-family: 'Orbitron',monospace; color: var(--cyan); font-size: 0.72rem; margin-bottom: 20px; letter-spacing: 3px; text-transform: uppercase; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+    .form-group input,.form-group select,.form-group textarea { width: 100%; background: rgba(0,180,216,0.04); border: 1px solid rgba(0,180,216,0.18); border-radius: 3px; padding: 10px 14px; color: var(--white); font-family: 'Barlow',sans-serif; font-size: 0.9rem; transition: border-color 0.2s; outline: none; }
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus { border-color: var(--cyan); background: rgba(0,180,216,0.08); }
+    .form-group select option { background: #0A1628; }
+    .form-group textarea { resize: vertical; min-height: 96px; }
+    .form-submit { width: 100%; background: var(--cyan); color: var(--navy); border: none; padding: 13px 24px; border-radius: 3px; cursor: pointer; transition: all 0.2s; font-family: 'Orbitron',monospace; font-weight: 700; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; }
+    .form-submit:hover { background: #90E0EF; transform: translateY(-1px); }
+    .form-success { display: none; text-align: center; padding: 24px; color: #69F0AE; font-family: 'Orbitron',monospace; font-size: 0.8rem; letter-spacing: 2px; }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 56px 24px 40px; border-top: 1px solid rgba(0,180,216,0.09); background: #060F1E; }
+    .footer-logo { font-family: 'Orbitron',monospace; font-size: 1.4rem; font-weight: 900; letter-spacing: 8px; color: rgba(0,180,216,0.18); margin-bottom: 4px; }
+    .footer-tagline { font-size: 0.7rem; letter-spacing: 2px; color: rgba(107,143,168,0.4); margin-bottom: 20px; font-style: italic; }
+    footer a { color: rgba(107,143,168,0.4); text-decoration: none; font-size: 0.72rem; transition: color 0.2s; }
+    footer a:hover { color: var(--cyan); }
+    .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 20px; flex-wrap: wrap; }
+    .footer-copy { font-size: 0.67rem; color: rgba(107,143,168,0.28); letter-spacing: 1px; line-height: 2.1; }
+    .footer-usa { color: var(--gold); opacity: 0.32; font-size: 0.67rem; letter-spacing: 2px; margin-top: 8px; }
+
+    @media(max-width:768px){
+      nav { padding: 12px 16px; }
+      .nav-links { display: none; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .dual-mission { grid-template-columns: 1fr; }
+      .usa-dot { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- WIP BANNER -->
+<div class="wip-banner">
+  <span class="wip-dot"></span>
+  <strong>SENTINEL is under active development</strong> — a small passionate founding team building something that cannot be stopped.
+  <a href="#contact">Join us →</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SENTINEL</div>
+  <div class="nav-links">
+    <a href="#question">The Question</a>
+    <a href="#drones">Drone Threat</a>
+    <a href="#mission">Mission</a>
+    <a href="#how">How It Works</a>
+    <a href="#modules">Sensors</a>
+    <a href="#team">Team</a>
+    <a href="#contact">Get Involved</a>
+    <div class="nav-usa">&#9733; Made in the USA</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Citizen Science · Distributed Radar · Blockchain Verified</div>
+    <div class="hero-title">SENTINEL</div>
+    <div class="hero-dash"></div>
+    <div class="hero-subtitle">the aerial phenomenon monitoring network</div>
+    <div class="hero-subtitle-small">Shared Environmental Network for Tracking Identified and Nonidentified Entities in Low-altitude</div>
+    <div class="hero-question">
+      <em>Are we alone?</em> Are we being visited? What is flying over our homes?<br>
+      Documenting UAPs, identifying unknown drones, and auditing our skies —<br>
+      permanently recorded, publicly accessible, impossible to suppress.
+    </div>
+    <div class="hero-buttons">
+      <a href="SENTINEL_Whitepaper_v3.pdf" class="btn-primary">Read the Whitepaper</a>
+      <a href="#contact" class="btn-secondary">Get Involved</a>
+    </div>
+  </div>
+</div>
+
+<!-- USA STRIP -->
+<div class="usa-strip">
+  <div class="usa-item">&#9733; Made in the USA</div>
+  <div class="usa-dot"></div>
+  <div class="usa-item">🏛️ US Nonprofit Foundation</div>
+  <div class="usa-dot"></div>
+  <div class="usa-item">🔬 Citizen Science</div>
+  <div class="usa-dot"></div>
+  <div class="usa-item">🛡️ National Security</div>
+  <div class="usa-dot"></div>
+  <div class="usa-item">🔓 Open Data</div>
+  <div class="usa-dot"></div>
+  <div class="usa-item">📋 Blockchain Verified</div>
+</div>
+
+<!-- THE QUESTION -->
+<div class="question-section" id="question">
+  <div class="question-inner">
+    <div class="question-label">The Question</div>
+    <div class="question-text"><strong>Are we alone?</strong><br>Are we being visited?</div>
+    <p class="question-body">For as long as human beings have looked at the sky, we have wondered what looks back. Pilots in every era of aviation have reported encounters with aerial phenomena their instruments could measure but their training could not explain. The United States military has officially confirmed the existence of Unidentified Aerial Phenomena — objects demonstrating flight characteristics beyond the known capabilities of any human-built aircraft.</p>
+    <p class="question-body">Congress has held hearings. Former military and intelligence officials have testified under oath. The question is no longer whether something unexplained is happening in our skies. The question is what — and the only way to answer it is with rigorous, independent, tamper-proof data collected at scale.</p>
+    <p class="question-body">That data does not yet exist. Governments classify what they collect. Individual sightings are dismissed as anecdotal. SENTINEL exists to change that — permanently, publicly, and in the hands of the people.</p>
+    <div class="question-callout">
+      <p>SENTINEL is a scientific instrument, not a cryptocurrency project. It scans our skies continuously, documents every anomalous detection — whether UAP or unidentified drone — and stores that data on a blockchain-verified, decentralized network that no government, corporation, or even its own founder can suppress or alter.</p>
+    </div>
+    <p class="question-body" style="text-align:center;font-style:italic;color:rgba(240,248,255,0.6);">"The sky has always had witnesses. For the first time, those witnesses have a voice that cannot be silenced."</p>
+  </div>
+</div>
+
+<!-- DRONE THREAT -->
+<div class="drone-section" id="drones">
+  <div class="drone-inner">
+    <div class="drone-label">National Security Threat</div>
+    <h2 style="color:#FF9090;">The Drone Threat is Real.<br>And So Is The Gap.</h2>
+    <p class="body-text" style="max-width:760px;">SENTINEL is not only about answering ancient questions. It is about protecting America right now. The skies above our homes, military bases, power plants, and airports are increasingly contested — and the public has no independent system for monitoring what moves through them.</p>
+
+    <div class="drone-grid">
+      <div class="drone-card">
+        <div class="drone-card-icon">🌐</div>
+        <div class="drone-card-title">Foreign Adversary Drones</div>
+        <p class="drone-card-desc">Unmanned aerial vehicles operated by foreign state actors have been documented near sensitive US military installations, nuclear facilities, and critical infrastructure. These incursions represent a direct national security threat with no adequate public-facing response system.</p>
+      </div>
+      <div class="drone-card">
+        <div class="drone-card-icon">⚔️</div>
+        <div class="drone-card-title">The Future of Warfare</div>
+        <p class="drone-card-desc">Drone warfare is not the future — it is the present. Conflicts worldwide have demonstrated that swarms of small, cheap, commercially available drones can overwhelm traditional defenses. The United States needs a distributed, citizen-accessible early warning layer now, before the threat escalates further.</p>
+      </div>
+      <div class="drone-card">
+        <div class="drone-card-icon">🕳️</div>
+        <div class="drone-card-title">The Monitoring Gap</div>
+        <p class="drone-card-desc">Military radar infrastructure is classified, inaccessible to the public, and not designed for distributed low-altitude monitoring. Law enforcement lacks the tools. The public has no visibility. SENTINEL fills this gap with a citizen-powered network that covers the ground-level airspace no existing system adequately monitors.</p>
+      </div>
+      <div class="drone-card">
+        <div class="drone-card-icon">📡</div>
+        <div class="drone-card-title">A Digital Net Over America</div>
+        <p class="drone-card-desc">Imagine thousands of SENTINEL nodes — in homes, farms, and neighborhoods across the country — forming a continuous, citizen-operated radar net. Every unidentified drone, every anomalous aerial object, permanently recorded and publicly accessible. No single point of control. No suppression possible.</p>
+      </div>
+    </div>
+
+    <div class="callout-red">
+      <p>SENTINEL scans our skies and documents everything — UAPs that defy explanation and unidentified drones that threaten our security alike. Both are recorded permanently on the blockchain. Both are accessible to citizens, researchers, journalists, and government agencies. The data belongs to the American people.</p>
+    </div>
+  </div>
+</div>
+
+<!-- DUAL MISSION -->
+<div class="section-wrap" id="mission">
+  <div class="section-label">Our Mission</div>
+  <h2>Two Missions.<br>One Instrument.</h2>
+  <p class="body-text">SENTINEL was built to answer humanity's oldest question and protect America's immediate security. These missions are not in conflict — they are served by the same distributed radar network, the same blockchain-verified data archive, and the same commitment to open, citizen-accessible information.</p>
+
+  <div class="dual-mission">
+    <div class="mission-card mission-card-uap">
+      <div class="mission-card-icon">🛸</div>
+      <div class="mission-card-title">UAP Documentation</div>
+      <p class="mission-card-desc">Continuously scanning for and documenting Unidentified Aerial Phenomena — objects that cannot be explained by known aviation. Every anomalous detection is cryptographically signed, blockchain-timestamped, and permanently archived. The scientific record that the UAP question has always needed, finally being built by the people.</p>
+    </div>
+    <div class="mission-card mission-card-drone">
+      <div class="mission-card-icon">🛡️</div>
+      <div class="mission-card-title">Drone Threat Monitoring</div>
+      <p class="mission-card-desc">Identifying, documenting, and archiving unidentified drone activity across American airspace. Foreign adversarial drones, commercially operated drones without flight plans, and any unmanned aerial vehicle that cannot be correlated with known operators — all recorded, all permanent, all public. A citizen early-warning system for the drone age.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>"Not even the founder of SENTINEL will be able to keep this information away from the people. That is the entire point." — Damon Mayo, Founder</p>
+  </div>
+  <p class="body-text">All detection data — whether UAP or unidentified drone — is stored using the same architecture: raw data on a decentralized storage network spanning thousands of hard drives worldwide, with cryptographic proof of every record written permanently to the blockchain. No single authority controls the storage. No single authority can remove a record.</p>
+</div>
+
+<hr class="divider"/>
+
+<!-- HOW IT WORKS -->
+<div class="section-wrap" id="how">
+  <div class="section-label">How It Works</div>
+  <h2>The System Architecture</h2>
+  <p class="body-text">SENTINEL operates as four interconnected layers — from the radar sensor at your home, to an alert on your phone, to two parallel blockchain networks, to open access for citizen scientists and security researchers worldwide.</p>
+
+  <div class="diagram-wrap">
+    <svg width="100%" viewBox="0 0 680 940" xmlns="http://www.w3.org/2000/svg" role="img">
+      <title>SENTINEL system architecture diagram</title>
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- LAYER 1 -->
+      <rect x="40" y="30" width="600" height="118" rx="10" fill="rgba(0,180,216,0.07)" stroke="rgba(0,180,216,0.4)" stroke-width="0.5"/>
+      <text x="340" y="56" text-anchor="middle" font-family="Orbitron,monospace" font-size="13" font-weight="700" fill="#00B4D8">LAYER 1 — SENSOR NODE</text>
+      <text x="340" y="74" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#6B8FA8">Installed at participant's home or property · scans for UAPs and unidentified drones</text>
+      <rect x="60" y="88" width="160" height="42" rx="6" fill="rgba(0,180,216,0.12)" stroke="rgba(0,180,216,0.5)" stroke-width="0.5"/>
+      <text x="140" y="107" text-anchor="middle" font-family="Orbitron,monospace" font-size="11" font-weight="700" fill="#F0F8FF">mmWave radar</text>
+      <text x="140" y="121" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">60-64 GHz · FCC compliant</text>
+      <line x1="220" y1="109" x2="256" y2="109" stroke="#00B4D8" stroke-width="1" marker-end="url(#arr)"/>
+      <rect x="256" y="88" width="168" height="42" rx="6" fill="rgba(0,180,216,0.12)" stroke="rgba(0,180,216,0.5)" stroke-width="0.5"/>
+      <text x="340" y="107" text-anchor="middle" font-family="Orbitron,monospace" font-size="11" font-weight="700" fill="#F0F8FF">Edge computer</text>
+      <text x="340" y="121" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">classify · sign · hash</text>
+      <line x1="424" y1="109" x2="460" y2="109" stroke="#00B4D8" stroke-width="1" marker-end="url(#arr)"/>
+      <rect x="460" y="88" width="160" height="42" rx="6" fill="rgba(0,180,216,0.12)" stroke="rgba(0,180,216,0.5)" stroke-width="0.5"/>
+      <text x="540" y="107" text-anchor="middle" font-family="Orbitron,monospace" font-size="11" font-weight="700" fill="#F0F8FF">Crypto signature</text>
+      <text x="540" y="121" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">tamper-proof identity</text>
+      <line x1="340" y1="148" x2="340" y2="182" stroke="#00B4D8" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="352" y="168" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">detection event</text>
+
+      <!-- LAYER 2 -->
+      <rect x="40" y="182" width="600" height="118" rx="10" fill="rgba(120,80,220,0.07)" stroke="rgba(140,100,220,0.4)" stroke-width="0.5"/>
+      <text x="340" y="208" text-anchor="middle" font-family="Orbitron,monospace" font-size="13" font-weight="700" fill="#A080E0">LAYER 2 — USER NOTIFICATION</text>
+      <text x="340" y="226" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#6B8FA8">Node operator alerted instantly on phone or tablet</text>
+      <rect x="60" y="240" width="160" height="42" rx="6" fill="rgba(120,80,220,0.12)" stroke="rgba(140,100,220,0.5)" stroke-width="0.5"/>
+      <text x="140" y="259" text-anchor="middle" font-family="Orbitron,monospace" font-size="11" font-weight="700" fill="#F0F8FF">Mobile app</text>
+      <text x="140" y="273" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">iOS · Android · tablet</text>
+      <line x1="220" y1="261" x2="256" y2="261" stroke="#A080E0" stroke-width="1" marker-end="url(#arr)"/>
+      <rect x="256" y="240" width="168" height="42" rx="6" fill="rgba(120,80,220,0.12)" stroke="rgba(140,100,220,0.5)" stroke-width="0.5"/>
+      <text x="340" y="259" text-anchor="middle" font-family="Orbitron,monospace" font-size="11" font-weight="700" fill="#F0F8FF">Detection alert</text>
+      <text x="340" y="273" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">tier · location · time</text>
+      <line x1="424" y1="261" x2="460" y2="261" stroke="#A080E0" stroke-width="1" marker-end="url(#arr)"/>
+      <rect x="460" y="240" width="160" height="42" rx="6" fill="rgba(120,80,220,0.12)" stroke="rgba(140,100,220,0.5)" stroke-width="0.5"/>
+      <text x="540" y="259" text-anchor="middle" font-family="Orbitron,monospace" font-size="11" font-weight="700" fill="#F0F8FF">Operator review</text>
+      <text x="540" y="273" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">confirm · annotate · flag</text>
+      <line x1="340" y1="300" x2="340" y2="336" stroke="#00B4D8" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="352" y="320" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">signed data package</text>
+
+      <!-- LAYER 3 -->
+      <rect x="40" y="336" width="600" height="208" rx="10" fill="rgba(24,95,165,0.07)" stroke="rgba(55,138,221,0.4)" stroke-width="0.5"/>
+      <text x="340" y="362" text-anchor="middle" font-family="Orbitron,monospace" font-size="13" font-weight="700" fill="#378ADD">LAYER 3 — DUAL BLOCKCHAIN ARCHITECTURE</text>
+      <text x="340" y="380" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#6B8FA8">Integrity chain + decentralized storage chain — working in parallel</text>
+      <rect x="60" y="394" width="256" height="128" rx="8" fill="rgba(24,95,165,0.12)" stroke="rgba(55,138,221,0.5)" stroke-width="0.5"/>
+      <text x="188" y="418" text-anchor="middle" font-family="Orbitron,monospace" font-size="12" font-weight="700" fill="#F0F8FF">Integrity chain</text>
+      <text x="188" y="436" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#378ADD">Polygon blockchain</text>
+      <text x="188" y="454" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Records cryptographic hashes</text>
+      <text x="188" y="470" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Timestamps every detection</text>
+      <text x="188" y="486" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Participation incentives</text>
+      <text x="188" y="506" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#69F0AE">Permanent · public · unalterable</text>
+      <rect x="364" y="394" width="256" height="128" rx="8" fill="rgba(24,95,165,0.12)" stroke="rgba(55,138,221,0.5)" stroke-width="0.5"/>
+      <text x="492" y="418" text-anchor="middle" font-family="Orbitron,monospace" font-size="12" font-weight="700" fill="#F0F8FF">Storage chain</text>
+      <text x="492" y="436" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#378ADD">IPFS + Filecoin</text>
+      <text x="492" y="454" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Stores raw radar data</text>
+      <text x="492" y="470" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Images · audio · thermal</text>
+      <text x="492" y="486" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Distributed across hard drives worldwide</text>
+      <text x="492" y="506" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#69F0AE">No single owner · no suppression</text>
+      <line x1="316" y1="450" x2="362" y2="450" stroke="#378ADD" stroke-width="1" marker-end="url(#arr)"/>
+      <line x1="362" y1="464" x2="316" y2="464" stroke="#378ADD" stroke-width="1" marker-end="url(#arr)"/>
+      <text x="339" y="445" text-anchor="middle" font-family="Barlow,sans-serif" font-size="9" fill="#378ADD">hash</text>
+      <text x="339" y="478" text-anchor="middle" font-family="Barlow,sans-serif" font-size="9" fill="#378ADD">verify</text>
+      <line x1="340" y1="544" x2="340" y2="580" stroke="#00B4D8" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="352" y="564" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">open public API</text>
+
+      <!-- LAYER 4 -->
+      <rect x="40" y="580" width="600" height="110" rx="10" fill="rgba(20,120,50,0.07)" stroke="rgba(40,160,80,0.4)" stroke-width="0.5"/>
+      <text x="340" y="606" text-anchor="middle" font-family="Orbitron,monospace" font-size="13" font-weight="700" fill="#40C870">LAYER 4 — OPEN ACCESS FOR ALL</text>
+      <text x="340" y="624" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#6B8FA8">UAP data · drone tracking · all records freely accessible to anyone, anywhere, forever</text>
+      <rect x="60" y="638" width="122" height="36" rx="6" fill="rgba(20,120,50,0.12)" stroke="rgba(40,160,80,0.5)" stroke-width="0.5"/>
+      <text x="121" y="660" text-anchor="middle" font-family="Orbitron,monospace" font-size="10" font-weight="700" fill="#F0F8FF">Researchers</text>
+      <rect x="198" y="638" width="122" height="36" rx="6" fill="rgba(20,120,50,0.12)" stroke="rgba(40,160,80,0.5)" stroke-width="0.5"/>
+      <text x="259" y="660" text-anchor="middle" font-family="Orbitron,monospace" font-size="10" font-weight="700" fill="#F0F8FF">Journalists</text>
+      <rect x="360" y="638" width="122" height="36" rx="6" fill="rgba(20,120,50,0.12)" stroke="rgba(40,160,80,0.5)" stroke-width="0.5"/>
+      <text x="421" y="660" text-anchor="middle" font-family="Orbitron,monospace" font-size="10" font-weight="700" fill="#F0F8FF">Citizens</text>
+      <rect x="498" y="638" width="122" height="36" rx="6" fill="rgba(20,120,50,0.12)" stroke="rgba(40,160,80,0.5)" stroke-width="0.5"/>
+      <text x="559" y="660" text-anchor="middle" font-family="Orbitron,monospace" font-size="10" font-weight="700" fill="#F0F8FF">Government</text>
+
+      <!-- DIGITAL NET -->
+      <rect x="40" y="726" width="600" height="84" rx="10" fill="rgba(180,140,0,0.07)" stroke="rgba(220,180,0,0.4)" stroke-width="0.5"/>
+      <text x="340" y="756" text-anchor="middle" font-family="Orbitron,monospace" font-size="13" font-weight="700" fill="#FFD700">THE DIGITAL NET — A NATIONWIDE SHIELD</text>
+      <text x="340" y="776" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#8BAFC8">Thousands of citizen nodes forming a continuous aerial monitoring layer across America</text>
+      <text x="340" y="796" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#8BAFC8">UAP science · drone defense · open data · no single point of control</text>
+
+      <!-- LEGEND -->
+      <rect x="40" y="830" width="600" height="90" rx="6" fill="none" stroke="rgba(0,180,216,0.1)" stroke-width="0.5"/>
+      <text x="340" y="852" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Data is tamper-proof from the moment of detection — no single authority can suppress it</text>
+      <rect x="66" y="864" width="10" height="10" rx="2" fill="rgba(0,180,216,0.4)"/>
+      <text x="82" y="874" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Sensor</text>
+      <rect x="152" y="864" width="10" height="10" rx="2" fill="rgba(140,100,220,0.4)"/>
+      <text x="168" y="874" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Notification</text>
+      <rect x="262" y="864" width="10" height="10" rx="2" fill="rgba(55,138,221,0.4)"/>
+      <text x="278" y="874" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Blockchain</text>
+      <rect x="370" y="864" width="10" height="10" rx="2" fill="rgba(40,160,80,0.4)"/>
+      <text x="386" y="874" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Open access</text>
+      <rect x="480" y="864" width="10" height="10" rx="2" fill="rgba(220,180,0,0.4)"/>
+      <text x="496" y="874" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Digital net</text>
+      <text x="340" y="906" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#4A7A8A" font-style="italic">SENTINEL — the aerial phenomenon monitoring network · sentinel-network.org</text>
+    </svg>
+  </div>
+
+  <!-- TIERS -->
+  <h2 style="margin-top:60px;">Detection Classification</h2>
+  <p class="body-text">Every aerial object detected — commercial aircraft, drone, bird, or unknown — is automatically classified. ADS-B integration filters routine aviation in real time, leaving anomalous and unidentified objects for investigation.</p>
+  <div class="tier-grid">
+    <div class="tier-card"><div class="tier-badge">T1</div><div class="tier-name">Fully Identified</div><p class="tier-desc">Matches ADS-B transponder data for commercial, private, or military aviation</p><div class="tier-sig">Routine air traffic</div></div>
+    <div class="tier-card"><div class="tier-badge">T2</div><div class="tier-name">Likely Identified</div><p class="tier-desc">Profile consistent with known drone, bird, or weather balloon — documented and archived</p><div class="tier-sig">Calibration data</div></div>
+    <div class="tier-card"><div class="tier-badge">T3</div><div class="tier-name">Anomalous</div><p class="tier-desc">Speed, maneuver, or profile outside the capability envelope of any known aircraft or drone</p><div class="tier-sig">Scientific investigation</div></div>
+    <div class="tier-card"><div class="tier-badge">T4</div><div class="tier-name">Unresolved</div><p class="tier-desc">No correlation with any known aerial object — UAP or otherwise — across all sensor data</p><div class="tier-sig">Primary scientific target</div></div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- SENSORS -->
+<div class="section-wrap" id="modules">
+  <div class="section-label">Modular Sensor Architecture</div>
+  <h2>Build Your Node,<br>Your Way</h2>
+  <p class="body-text">Every SENTINEL node starts with a Core radar module and expands with optional sensors. More sensors means richer detection packages — whether you are documenting a UAP, tracking an unidentified drone, or both simultaneously.</p>
+  <div class="callout">
+    <p>A full-stack node produces a complete evidence package for every detection: radar track, acoustic signature, optical image, thermal profile, RF emissions, and environmental readings — all cryptographically signed and blockchain-archived.</p>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <div class="module-header"><div class="module-icon">📡</div><div class="module-title">Core Module</div></div>
+      <span class="module-badge badge-core">Required</span>
+      <p class="module-desc">Continuous mmWave radar monitoring with cryptographic data submission. The foundation of every SENTINEL node.</p>
+      <ul class="module-features"><li>TI IWR6843 mmWave radar (60-64 GHz)</li><li>Raspberry Pi edge computer</li><li>Cryptographic signing agent</li><li>ADS-B real-time cross-reference</li></ul>
+    </div>
+    <div class="module-card">
+      <div class="module-header"><div class="module-icon">🎙️</div><div class="module-title">Acoustic Module</div></div>
+      <span class="module-badge badge-opt">Optional</span>
+      <p class="module-desc">BirdNET AI automatically identifies birds. Engine classification distinguishes drones from aircraft. Infrasound detection captures low-frequency anomalies.</p>
+      <ul class="module-features"><li>ReSpeaker microphone array</li><li>BirdNET AI — Cornell Lab of Ornithology</li><li>Drone motor classification</li><li>Infrasound detection</li></ul>
+    </div>
+    <div class="module-card">
+      <div class="module-header"><div class="module-icon">📷</div><div class="module-title">Optical Module</div></div>
+      <span class="module-badge badge-opt">Optional</span>
+      <p class="module-desc">Radar-triggered camera activates only on T2+ detections. Captures UAPs and unidentified drones. Every image cryptographically linked to its radar event.</p>
+      <ul class="module-features"><li>High-resolution triggered camera</li><li>Night vision capability</li><li>Pan/tilt auto-tracking gimbal</li><li>IPFS upload + blockchain hash</li></ul>
+    </div>
+    <div class="module-card">
+      <div class="module-header"><div class="module-icon">🌡️</div><div class="module-title">Thermal Module</div></div>
+      <span class="module-badge badge-opt">Optional</span>
+      <p class="module-desc">FLIR infrared imaging detects heat signatures in total darkness. Distinguishes drone thermal profiles from birds, aircraft, and unknown objects.</p>
+      <ul class="module-features"><li>FLIR Lepton thermal sensor</li><li>Heat signature classification</li><li>Drone vs bird vs unknown profiling</li><li>All-weather, all-darkness operation</li></ul>
+    </div>
+    <div class="module-card">
+      <div class="module-header"><div class="module-icon">📻</div><div class="module-title">RF Spectrum Module</div></div>
+      <span class="module-badge badge-opt">Optional</span>
+      <p class="module-desc">Software Defined Radio monitors electromagnetic emissions. Identifies drone control frequencies. Flags objects emitting unknown or no RF signals.</p>
+      <ul class="module-features"><li>RTL-SDR software defined radio</li><li>Drone control frequency detection</li><li>Unknown frequency flagging</li><li>RF silence anomaly detection</li></ul>
+    </div>
+    <div class="module-card">
+      <div class="module-header"><div class="module-icon">🧲</div><div class="module-title">Environmental Module</div></div>
+      <span class="module-badge badge-opt">Optional</span>
+      <p class="module-desc">Monitors magnetic field disturbances, radiation anomalies, and EMF fluctuations — environmental signatures historically associated with both UAPs and advanced drone technology.</p>
+      <ul class="module-features"><li>Magnetometer (magnetic field)</li><li>Geiger counter (radiation)</li><li>EMF sensor</li><li>Barometric pressure</li></ul>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- TEAM -->
+<div class="team-section" id="team">
+  <div class="team-inner">
+    <div class="section-label">Founding Team</div>
+    <h2>The People Behind SENTINEL</h2>
+    <p class="body-text">SENTINEL was built from scratch by a small team driven by one conviction: the most important scientific question in human history — and the most urgent national security challenge of our era — both deserve a serious, independent, citizen-powered answer.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">DM</div>
+        <div class="team-name">Damon Mayo</div>
+        <div class="team-role">Founder</div>
+        <p class="team-bio">Inventor and entrepreneur who conceived the SENTINEL concept and brought it from idea to blockchain-verified reality. Damon leads SENTINEL's vision, strategy, legal structure, and community — driven by the belief that the sky belongs to everyone and its secrets should be kept by no one.</p>
+        <span class="team-tag">Florida, USA</span>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">JW</div>
+        <div class="team-name">J. Whitmore</div>
+        <div class="team-role">Co-Founder</div>
+        <p class="team-bio">Co-founder of SENTINEL and a key member of the founding team committed to building a network that cannot be suppressed, silenced, or controlled by any single authority. Bringing critical expertise and shared conviction to SENTINEL's mission of open, citizen-powered aerial science and national security.</p>
+        <span class="team-tag">United States</span>
+      </div>
+    </div>
+    <div style="margin-top:40px;text-align:center;">
+      <p class="body-text" style="margin:0 auto 24px;text-align:center;">SENTINEL is actively seeking co-founders with backgrounds in radar engineering, blockchain development, scientific research, and science communication.</p>
+      <a href="#contact" class="btn-secondary">Join the Founding Team →</a>
+    </div>
+  </div>
+</div>
+
+<!-- PROOF -->
+<div class="section-wrap">
+  <div class="section-label">Founding Record</div>
+  <h2>Verified. Permanent.<br>Unalterable.</h2>
+  <p class="body-text">SENTINEL was founded on March 20, 2026. This is not a claim — it is a mathematical fact permanently recorded on the Polygon blockchain, publicly verifiable by anyone in the world, at any time, forever.</p>
+  <div class="proof-block">
+    <span>FOUNDER    :</span> Damon Mayo<br>
+    <span>CO-FOUNDER :</span> J. Whitmore<br>
+    <span>PROJECT    :</span> SENTINEL — the aerial phenomenon monitoring network<br>
+    <span>ORIGIN     :</span> Florida, United States of America<br>
+    <span>ESTABLISHED:</span> March 20, 2026<br>
+    <span>CONTRACT   :</span> 0x1785c905a3ba84b03ced124d71ce9caa3431bc18<br>
+    <span>TX HASH    :</span> 0x2e20d71badb4dad02915232c76dc3d0c76e9637faa9a8430dfea0a50dfc140fe<br>
+    <span>DOC HASH   :</span> b2382483284712903b8bc695c0570dd012e87e12efa1efb45cd36f79bd5e43ef<br>
+    <span>TIMESTAMP  :</span> 2026-03-20 09:50:57 UTC — Block 84440112<br>
+    <span>NETWORK    :</span> Polygon Mainnet<br>
+    <span>STATUS     :</span> <span class="proof-verified">✓ VERIFIED AND PUBLISHED</span>
+  </div>
+  <a href="https://polygonscan.com/address/0x1785c905a3ba84b03ced124d71ce9caa3431bc18" target="_blank" class="btn-secondary">Verify on Polygonscan →</a>
+</div>
+
+<hr class="divider"/>
+
+<!-- GET INVOLVED -->
+<div class="section-wrap">
+  <div class="section-label">Join SENTINEL</div>
+  <h2>Who We're Looking For</h2>
+  <p class="body-text">SENTINEL is built by people who believe the sky belongs to everyone — who want to help answer the greatest scientific question of our era and protect America from an emerging security threat at the same time. If that is you, we want to hear from you.</p>
+  <div class="involve-grid">
+    <div class="involve-card"><div class="involve-icon">🛠️</div><div class="involve-title">Co-Founders</div><p class="involve-desc">Engineers, researchers, developers, communicators, and legal minds ready to build something that genuinely matters.</p></div>
+    <div class="involve-card"><div class="involve-icon">📡</div><div class="involve-title">Node Operators</div><p class="involve-desc">People who want to install a SENTINEL node and contribute their corner of the sky — documenting UAPs and monitoring drone activity.</p></div>
+    <div class="involve-card"><div class="involve-icon">🔬</div><div class="involve-title">Researchers</div><p class="involve-desc">Scientists and institutions interested in analyzing SENTINEL's UAP and drone datasets and contributing to peer-reviewed publication.</p></div>
+    <div class="involve-card"><div class="involve-icon">&#9733;</div><div class="involve-title">Supporters</div><p class="involve-desc">Donors and grant makers who want to fund the most important American citizen science and national security project of our era.</p></div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="section-label">Contact</div>
+    <h2>Ready to Help Build SENTINEL?</h2>
+    <p class="body-text">We are a small founding team. We read and respond to every message personally. Whether your interest is the science, the security, or both — reach out.</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Direct Contact</h3>
+        <p>Email us at:</p>
+        <a href="mailto:contact@sentinel-network.org" class="contact-email-link">contact@sentinel-network.org</a>
+        <div class="contact-meta">
+          <strong>⚡ Response: within 48 hours</strong><br><br>
+          SENTINEL Foundation Inc.<br>
+          Florida, United States<br><br>
+          🌐 sentinel-network.org<br>
+          ⛓️ Blockchain verified · March 20, 2026<br>
+          📄 Patent applications pending<br>
+          🔬 Nonprofit 501c3 status pending
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Send a Message</h3>
+        <form id="sentinelForm" action="https://formspree.io/f/mgopnoww" method="POST">
+          <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="Your full name" required/></div>
+          <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="you@example.com" required/></div>
+          <div class="form-group"><label>How would you like to contribute?</label>
+            <select name="interest">
+              <option value="">Select one...</option>
+              <option>Co-founding SENTINEL</option>
+              <option>Operating a Node</option>
+              <option>Research Partnership</option>
+              <option>Funding or Grants</option>
+              <option>Press or Media Inquiry</option>
+              <option>Something Else</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Message</label><textarea name="message" placeholder="Tell us about yourself and what draws you to SENTINEL's mission..." required></textarea></div>
+          <button type="submit" class="form-submit">Send Message →</button>
+        </form>
+        <div class="form-success" id="formSuccess">✓ MESSAGE RECEIVED — WE'LL BE IN TOUCH WITHIN 48 HOURS.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">SENTINEL</div>
+  <div class="footer-tagline">the aerial phenomenon monitoring network</div>
+  <div class="footer-links">
+    <a href="https://polygonscan.com/address/0x1785c905a3ba84b03ced124d71ce9caa3431bc18" target="_blank">Verify Founding Record</a>
+    <a href="SENTINEL_Whitepaper_v3.pdf" download>Download Whitepaper v3</a>
+    <a href="mailto:contact@sentinel-network.org">Contact</a>
+  </div>
+  <div class="footer-copy">
+    © 2026 SENTINEL Foundation Inc. — Founded by Damon Mayo &amp; J. Whitmore<br>
+    Blockchain Verified · March 20, 2026 · Polygon Mainnet · Block 84440112<br>
+    Shared Environmental Network for Tracking Identified and Nonidentified Entities in Low-altitude
+  </div>
+  <div class="footer-usa">&#9733; Made in the USA &middot; Florida, United States &middot; Patent Pending</div>
+</footer>
+
+<script>
+  // Parallax — hero background image
+  const heroBg = document.getElementById('heroBg');
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const heroH = document.querySelector('.hero').offsetHeight;
+        if (scrollY < heroH + 200) heroBg.style.transform = `translateY(${scrollY * 0.42}px)`;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // Contact form
+  const form = document.getElementById('sentinelForm');
+  const success = document.getElementById('formSuccess');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(form.action, { method:'POST', body: new FormData(form), headers:{'Accept':'application/json'} });
+      if (res.ok) { form.style.display='none'; success.style.display='block'; }
+    } catch { alert('Error — please email contact@sentinel-network.org directly.'); }
+  });
+</script>
+</body>
+</html>
