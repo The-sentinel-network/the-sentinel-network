@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SENTINEL — the aerial phenomenon monitoring network</title>
+  
+  <title>SENTINEL Foundation | Citizen-Powered Aerial Monitoring Network</title>
   <meta name="description" content="SENTINEL is a citizen-powered aerial monitoring network using distributed radar and blockchain-verified data to document UAPs, identify unknown drones, and pursue the most important scientific question of our era." />
+  
+  <meta property="og:title" content="SENTINEL Foundation | Aerial Monitoring Network">
+  <meta property="og:description" content="Help us build a distributed tracking grid for low-altitude airspace. Support our GoFundMe campaign.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
   <style>
@@ -57,6 +64,8 @@
     .btn-primary:hover { background: #90E0EF; transform: translateY(-2px); }
     .btn-secondary { border: 1px solid var(--cyan); color: var(--cyan); padding: 13px 30px; border-radius: 3px; text-decoration: none; font-family: 'Orbitron',monospace; font-weight: 700; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; transition: all 0.2s; background: transparent; display: inline-block; }
     .btn-secondary:hover { background: var(--cyan-dim); transform: translateY(-2px); }
+    .btn-gold { background: #FFD700; color: var(--navy); padding: 13px 30px; border-radius: 3px; text-decoration: none; font-family: 'Orbitron',monospace; font-weight: 700; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; transition: all 0.2s; box-shadow: 0 0 24px rgba(255,215,0,0.25); border: none; cursor: pointer; display: inline-block; }
+    .btn-gold:hover { background: #FFE066; transform: translateY(-2px); }
 
     /* USA STRIP */
     .usa-strip { background: linear-gradient(90deg,rgba(0,10,30,0.9),rgba(0,30,60,0.6),rgba(0,10,30,0.9)); border-top: 1px solid rgba(255,215,0,0.18); border-bottom: 1px solid rgba(255,215,0,0.18); padding: 18px 24px; display: flex; justify-content: center; align-items: center; gap: 28px; flex-wrap: wrap; }
@@ -204,14 +213,11 @@
 </head>
 <body>
 
-<!-- WIP BANNER -->
 <div class="wip-banner">
   <span class="wip-dot"></span>
-  <strong>SENTINEL is under active development</strong> — a small passionate founding team building something that cannot be stopped.
-  <a href="#contact">Join us →</a>
+  <strong>SENTINEL is under active development</strong> — support our infrastructure campaign on <a href="https://gofund.me/66e112f60" target="_blank" rel="noopener">GoFundMe →</a>
 </div>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo">SENTINEL</div>
   <div class="nav-links">
@@ -221,12 +227,12 @@
     <a href="#how">How It Works</a>
     <a href="#modules">Sensors</a>
     <a href="#team">Team</a>
+    <a href="https://gofund.me/66e112f60" target="_blank" rel="noopener" style="color:var(--gold);">Support Campaign</a>
     <a href="#contact">Get Involved</a>
     <div class="nav-usa">&#9733; Made in the USA</div>
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
@@ -242,13 +248,13 @@
       permanently recorded, publicly accessible, impossible to suppress.
     </div>
     <div class="hero-buttons">
-      <a href="SENTINEL_Whitepaper_v3.pdf" class="btn-primary">Read the Whitepaper</a>
-      <a href="#contact" class="btn-secondary">Get Involved</a>
+      <a href="SENTINEL_Whitepaper_v3.pdf" class="btn-primary">Read Whitepaper</a>
+      <a href="https://gofund.me/66e112f60" target="_blank" rel="noopener" class="btn-gold">Support GoFundMe</a>
+      <a href="https://x.com/SentinelNetwrk" target="_blank" rel="noopener" class="btn-secondary">Follow on X</a>
     </div>
   </div>
 </div>
 
-<!-- USA STRIP -->
 <div class="usa-strip">
   <div class="usa-item">&#9733; Made in the USA</div>
   <div class="usa-dot"></div>
@@ -263,7 +269,6 @@
   <div class="usa-item">📋 Blockchain Verified</div>
 </div>
 
-<!-- THE QUESTION -->
 <div class="question-section" id="question">
   <div class="question-inner">
     <div class="question-label">The Question</div>
@@ -278,7 +283,6 @@
   </div>
 </div>
 
-<!-- DRONE THREAT -->
 <div class="drone-section" id="drones">
   <div class="drone-inner">
     <div class="drone-label">National Security Threat</div>
@@ -314,7 +318,6 @@
   </div>
 </div>
 
-<!-- DUAL MISSION -->
 <div class="section-wrap" id="mission">
   <div class="section-label">Our Mission</div>
   <h2>Two Missions.<br>One Instrument.</h2>
@@ -341,7 +344,6 @@
 
 <hr class="divider"/>
 
-<!-- HOW IT WORKS -->
 <div class="section-wrap" id="how">
   <div class="section-label">How It Works</div>
   <h2>The System Architecture</h2>
@@ -356,7 +358,6 @@
         </marker>
       </defs>
 
-      <!-- LAYER 1 -->
       <rect x="40" y="30" width="600" height="118" rx="10" fill="rgba(0,180,216,0.07)" stroke="rgba(0,180,216,0.4)" stroke-width="0.5"/>
       <text x="340" y="56" text-anchor="middle" font-family="Orbitron,monospace" font-size="13" font-weight="700" fill="#00B4D8">LAYER 1 — SENSOR NODE</text>
       <text x="340" y="74" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#6B8FA8">Installed at participant's home or property · scans for UAPs and unidentified drones</text>
@@ -374,7 +375,6 @@
       <line x1="340" y1="148" x2="340" y2="182" stroke="#00B4D8" stroke-width="1.5" marker-end="url(#arr)"/>
       <text x="352" y="168" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">detection event</text>
 
-      <!-- LAYER 2 -->
       <rect x="40" y="182" width="600" height="118" rx="10" fill="rgba(120,80,220,0.07)" stroke="rgba(140,100,220,0.4)" stroke-width="0.5"/>
       <text x="340" y="208" text-anchor="middle" font-family="Orbitron,monospace" font-size="13" font-weight="700" fill="#A080E0">LAYER 2 — USER NOTIFICATION</text>
       <text x="340" y="226" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#6B8FA8">Node operator alerted instantly on phone or tablet</text>
@@ -392,7 +392,6 @@
       <line x1="340" y1="300" x2="340" y2="336" stroke="#00B4D8" stroke-width="1.5" marker-end="url(#arr)"/>
       <text x="352" y="320" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">signed data package</text>
 
-      <!-- LAYER 3 -->
       <rect x="40" y="336" width="600" height="208" rx="10" fill="rgba(24,95,165,0.07)" stroke="rgba(55,138,221,0.4)" stroke-width="0.5"/>
       <text x="340" y="362" text-anchor="middle" font-family="Orbitron,monospace" font-size="13" font-weight="700" fill="#378ADD">LAYER 3 — DUAL BLOCKCHAIN ARCHITECTURE</text>
       <text x="340" y="380" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#6B8FA8">Integrity chain + decentralized storage chain — working in parallel</text>
@@ -417,7 +416,6 @@
       <line x1="340" y1="544" x2="340" y2="580" stroke="#00B4D8" stroke-width="1.5" marker-end="url(#arr)"/>
       <text x="352" y="564" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">open public API</text>
 
-      <!-- LAYER 4 -->
       <rect x="40" y="580" width="600" height="110" rx="10" fill="rgba(20,120,50,0.07)" stroke="rgba(40,160,80,0.4)" stroke-width="0.5"/>
       <text x="340" y="606" text-anchor="middle" font-family="Orbitron,monospace" font-size="13" font-weight="700" fill="#40C870">LAYER 4 — OPEN ACCESS FOR ALL</text>
       <text x="340" y="624" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#6B8FA8">UAP data · drone tracking · all records freely accessible to anyone, anywhere, forever</text>
@@ -430,13 +428,11 @@
       <rect x="498" y="638" width="122" height="36" rx="6" fill="rgba(20,120,50,0.12)" stroke="rgba(40,160,80,0.5)" stroke-width="0.5"/>
       <text x="559" y="660" text-anchor="middle" font-family="Orbitron,monospace" font-size="10" font-weight="700" fill="#F0F8FF">Government</text>
 
-      <!-- DIGITAL NET -->
       <rect x="40" y="726" width="600" height="84" rx="10" fill="rgba(180,140,0,0.07)" stroke="rgba(220,180,0,0.4)" stroke-width="0.5"/>
       <text x="340" y="756" text-anchor="middle" font-family="Orbitron,monospace" font-size="13" font-weight="700" fill="#FFD700">THE DIGITAL NET — A NATIONWIDE SHIELD</text>
       <text x="340" y="776" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#8BAFC8">Thousands of citizen nodes forming a continuous aerial monitoring layer across America</text>
       <text x="340" y="796" text-anchor="middle" font-family="Barlow,sans-serif" font-size="11" fill="#8BAFC8">UAP science · drone defense · open data · no single point of control</text>
 
-      <!-- LEGEND -->
       <rect x="40" y="830" width="600" height="90" rx="6" fill="none" stroke="rgba(0,180,216,0.1)" stroke-width="0.5"/>
       <text x="340" y="852" text-anchor="middle" font-family="Barlow,sans-serif" font-size="10" fill="#6B8FA8">Data is tamper-proof from the moment of detection — no single authority can suppress it</text>
       <rect x="66" y="864" width="10" height="10" rx="2" fill="rgba(0,180,216,0.4)"/>
@@ -453,222 +449,11 @@
     </svg>
   </div>
 
-  <!-- TIERS -->
   <h2 style="margin-top:60px;">Detection Classification</h2>
   <p class="body-text">Every aerial object detected — commercial aircraft, drone, bird, or unknown — is automatically classified. ADS-B integration filters routine aviation in real time, leaving anomalous and unidentified objects for investigation.</p>
   <div class="tier-grid">
     <div class="tier-card"><div class="tier-badge">T1</div><div class="tier-name">Fully Identified</div><p class="tier-desc">Matches ADS-B transponder data for commercial, private, or military aviation</p><div class="tier-sig">Routine air traffic</div></div>
     <div class="tier-card"><div class="tier-badge">T2</div><div class="tier-name">Likely Identified</div><p class="tier-desc">Profile consistent with known drone, bird, or weather balloon — documented and archived</p><div class="tier-sig">Calibration data</div></div>
     <div class="tier-card"><div class="tier-badge">T3</div><div class="tier-name">Anomalous</div><p class="tier-desc">Speed, maneuver, or profile outside the capability envelope of any known aircraft or drone</p><div class="tier-sig">Scientific investigation</div></div>
-    <div class="tier-card"><div class="tier-badge">T4</div><div class="tier-name">Unresolved</div><p class="tier-desc">No correlation with any known aerial object — UAP or otherwise — across all sensor data</p><div class="tier-sig">Primary scientific target</div></div>
-  </div>
-</div>
+    <div class="tier-card"><div class="tier-badge">T4</div><div class="
 
-<hr class="divider"/>
-
-<!-- SENSORS -->
-<div class="section-wrap" id="modules">
-  <div class="section-label">Modular Sensor Architecture</div>
-  <h2>Build Your Node,<br>Your Way</h2>
-  <p class="body-text">Every SENTINEL node starts with a Core radar module and expands with optional sensors. More sensors means richer detection packages — whether you are documenting a UAP, tracking an unidentified drone, or both simultaneously.</p>
-  <div class="callout">
-    <p>A full-stack node produces a complete evidence package for every detection: radar track, acoustic signature, optical image, thermal profile, RF emissions, and environmental readings — all cryptographically signed and blockchain-archived.</p>
-  </div>
-  <div class="module-grid">
-    <div class="module-card">
-      <div class="module-header"><div class="module-icon">📡</div><div class="module-title">Core Module</div></div>
-      <span class="module-badge badge-core">Required</span>
-      <p class="module-desc">Continuous mmWave radar monitoring with cryptographic data submission. The foundation of every SENTINEL node.</p>
-      <ul class="module-features"><li>TI IWR6843 mmWave radar (60-64 GHz)</li><li>Raspberry Pi edge computer</li><li>Cryptographic signing agent</li><li>ADS-B real-time cross-reference</li></ul>
-    </div>
-    <div class="module-card">
-      <div class="module-header"><div class="module-icon">🎙️</div><div class="module-title">Acoustic Module</div></div>
-      <span class="module-badge badge-opt">Optional</span>
-      <p class="module-desc">BirdNET AI automatically identifies birds. Engine classification distinguishes drones from aircraft. Infrasound detection captures low-frequency anomalies.</p>
-      <ul class="module-features"><li>ReSpeaker microphone array</li><li>BirdNET AI — Cornell Lab of Ornithology</li><li>Drone motor classification</li><li>Infrasound detection</li></ul>
-    </div>
-    <div class="module-card">
-      <div class="module-header"><div class="module-icon">📷</div><div class="module-title">Optical Module</div></div>
-      <span class="module-badge badge-opt">Optional</span>
-      <p class="module-desc">Radar-triggered camera activates only on T2+ detections. Captures UAPs and unidentified drones. Every image cryptographically linked to its radar event.</p>
-      <ul class="module-features"><li>High-resolution triggered camera</li><li>Night vision capability</li><li>Pan/tilt auto-tracking gimbal</li><li>IPFS upload + blockchain hash</li></ul>
-    </div>
-    <div class="module-card">
-      <div class="module-header"><div class="module-icon">🌡️</div><div class="module-title">Thermal Module</div></div>
-      <span class="module-badge badge-opt">Optional</span>
-      <p class="module-desc">FLIR infrared imaging detects heat signatures in total darkness. Distinguishes drone thermal profiles from birds, aircraft, and unknown objects.</p>
-      <ul class="module-features"><li>FLIR Lepton thermal sensor</li><li>Heat signature classification</li><li>Drone vs bird vs unknown profiling</li><li>All-weather, all-darkness operation</li></ul>
-    </div>
-    <div class="module-card">
-      <div class="module-header"><div class="module-icon">📻</div><div class="module-title">RF Spectrum Module</div></div>
-      <span class="module-badge badge-opt">Optional</span>
-      <p class="module-desc">Software Defined Radio monitors electromagnetic emissions. Identifies drone control frequencies. Flags objects emitting unknown or no RF signals.</p>
-      <ul class="module-features"><li>RTL-SDR software defined radio</li><li>Drone control frequency detection</li><li>Unknown frequency flagging</li><li>RF silence anomaly detection</li></ul>
-    </div>
-    <div class="module-card">
-      <div class="module-header"><div class="module-icon">🧲</div><div class="module-title">Environmental Module</div></div>
-      <span class="module-badge badge-opt">Optional</span>
-      <p class="module-desc">Monitors magnetic field disturbances, radiation anomalies, and EMF fluctuations — environmental signatures historically associated with both UAPs and advanced drone technology.</p>
-      <ul class="module-features"><li>Magnetometer (magnetic field)</li><li>Geiger counter (radiation)</li><li>EMF sensor</li><li>Barometric pressure</li></ul>
-    </div>
-  </div>
-</div>
-
-<hr class="divider"/>
-
-<!-- TEAM -->
-<div class="team-section" id="team">
-  <div class="team-inner">
-    <div class="section-label">Founding Team</div>
-    <h2>The People Behind SENTINEL</h2>
-    <p class="body-text">SENTINEL was built from scratch by a small team driven by one conviction: the most important scientific question in human history — and the most urgent national security challenge of our era — both deserve a serious, independent, citizen-powered answer.</p>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-avatar">DM</div>
-        <div class="team-name">Damon Mayo</div>
-        <div class="team-role">Founder</div>
-        <p class="team-bio">Inventor and entrepreneur who conceived the SENTINEL concept and brought it from idea to blockchain-verified reality. Damon leads SENTINEL's vision, strategy, legal structure, and community — driven by the belief that the sky belongs to everyone and its secrets should be kept by no one.</p>
-        <span class="team-tag">Florida, USA</span>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">JW</div>
-        <div class="team-name">J. Whitmore</div>
-        <div class="team-role">Co-Founder</div>
-        <p class="team-bio">Co-founder of SENTINEL and a key member of the founding team committed to building a network that cannot be suppressed, silenced, or controlled by any single authority. Bringing critical expertise and shared conviction to SENTINEL's mission of open, citizen-powered aerial science and national security.</p>
-        <span class="team-tag">United States</span>
-      </div>
-    </div>
-    <div style="margin-top:40px;text-align:center;">
-      <p class="body-text" style="margin:0 auto 24px;text-align:center;">SENTINEL is actively seeking co-founders with backgrounds in radar engineering, blockchain development, scientific research, and science communication.</p>
-      <a href="#contact" class="btn-secondary">Join the Founding Team →</a>
-    </div>
-  </div>
-</div>
-
-<!-- PROOF -->
-<div class="section-wrap">
-  <div class="section-label">Founding Record</div>
-  <h2>Verified. Permanent.<br>Unalterable.</h2>
-  <p class="body-text">SENTINEL was founded on March 20, 2026. This is not a claim — it is a mathematical fact permanently recorded on the Polygon blockchain, publicly verifiable by anyone in the world, at any time, forever.</p>
-  <div class="proof-block">
-    <span>FOUNDER    :</span> Damon Mayo<br>
-    <span>CO-FOUNDER :</span> J. Whitmore<br>
-    <span>PROJECT    :</span> SENTINEL — the aerial phenomenon monitoring network<br>
-    <span>ORIGIN     :</span> Florida, United States of America<br>
-    <span>ESTABLISHED:</span> March 20, 2026<br>
-    <span>CONTRACT   :</span> 0x1785c905a3ba84b03ced124d71ce9caa3431bc18<br>
-    <span>TX HASH    :</span> 0x2e20d71badb4dad02915232c76dc3d0c76e9637faa9a8430dfea0a50dfc140fe<br>
-    <span>DOC HASH   :</span> b2382483284712903b8bc695c0570dd012e87e12efa1efb45cd36f79bd5e43ef<br>
-    <span>TIMESTAMP  :</span> 2026-03-20 09:50:57 UTC — Block 84440112<br>
-    <span>NETWORK    :</span> Polygon Mainnet<br>
-    <span>STATUS     :</span> <span class="proof-verified">✓ VERIFIED AND PUBLISHED</span>
-  </div>
-  <a href="https://polygonscan.com/address/0x1785c905a3ba84b03ced124d71ce9caa3431bc18" target="_blank" class="btn-secondary">Verify on Polygonscan →</a>
-</div>
-
-<hr class="divider"/>
-
-<!-- GET INVOLVED -->
-<div class="section-wrap">
-  <div class="section-label">Join SENTINEL</div>
-  <h2>Who We're Looking For</h2>
-  <p class="body-text">SENTINEL is built by people who believe the sky belongs to everyone — who want to help answer the greatest scientific question of our era and protect America from an emerging security threat at the same time. If that is you, we want to hear from you.</p>
-  <div class="involve-grid">
-    <div class="involve-card"><div class="involve-icon">🛠️</div><div class="involve-title">Co-Founders</div><p class="involve-desc">Engineers, researchers, developers, communicators, and legal minds ready to build something that genuinely matters.</p></div>
-    <div class="involve-card"><div class="involve-icon">📡</div><div class="involve-title">Node Operators</div><p class="involve-desc">People who want to install a SENTINEL node and contribute their corner of the sky — documenting UAPs and monitoring drone activity.</p></div>
-    <div class="involve-card"><div class="involve-icon">🔬</div><div class="involve-title">Researchers</div><p class="involve-desc">Scientists and institutions interested in analyzing SENTINEL's UAP and drone datasets and contributing to peer-reviewed publication.</p></div>
-    <div class="involve-card"><div class="involve-icon">&#9733;</div><div class="involve-title">Supporters</div><p class="involve-desc">Donors and grant makers who want to fund the most important American citizen science and national security project of our era.</p></div>
-  </div>
-</div>
-
-<!-- CONTACT -->
-<div class="contact-section" id="contact">
-  <div class="contact-inner">
-    <div class="section-label">Contact</div>
-    <h2>Ready to Help Build SENTINEL?</h2>
-    <p class="body-text">We are a small founding team. We read and respond to every message personally. Whether your interest is the science, the security, or both — reach out.</p>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <h3>Direct Contact</h3>
-        <p>Email us at:</p>
-        <a href="mailto:contact@sentinel-network.org" class="contact-email-link">contact@sentinel-network.org</a>
-        <div class="contact-meta">
-          <strong>⚡ Response: within 48 hours</strong><br><br>
-          SENTINEL Foundation Inc.<br>
-          Florida, United States<br><br>
-          🌐 sentinel-network.org<br>
-          ⛓️ Blockchain verified · March 20, 2026<br>
-          📄 Patent applications pending<br>
-          🔬 Nonprofit 501c3 status pending
-        </div>
-      </div>
-      <div class="contact-form">
-        <h3>Send a Message</h3>
-        <form id="sentinelForm" action="https://formspree.io/f/mgopnoww" method="POST">
-          <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="Your full name" required/></div>
-          <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="you@example.com" required/></div>
-          <div class="form-group"><label>How would you like to contribute?</label>
-            <select name="interest">
-              <option value="">Select one...</option>
-              <option>Co-founding SENTINEL</option>
-              <option>Operating a Node</option>
-              <option>Research Partnership</option>
-              <option>Funding or Grants</option>
-              <option>Press or Media Inquiry</option>
-              <option>Something Else</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Message</label><textarea name="message" placeholder="Tell us about yourself and what draws you to SENTINEL's mission..." required></textarea></div>
-          <button type="submit" class="form-submit">Send Message →</button>
-        </form>
-        <div class="form-success" id="formSuccess">✓ MESSAGE RECEIVED — WE'LL BE IN TOUCH WITHIN 48 HOURS.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <div class="footer-logo">SENTINEL</div>
-  <div class="footer-tagline">the aerial phenomenon monitoring network</div>
-  <div class="footer-links">
-    <a href="https://polygonscan.com/address/0x1785c905a3ba84b03ced124d71ce9caa3431bc18" target="_blank">Verify Founding Record</a>
-    <a href="SENTINEL_Whitepaper_v3.pdf" download>Download Whitepaper v3</a>
-    <a href="mailto:contact@sentinel-network.org">Contact</a>
-  </div>
-  <div class="footer-copy">
-    © 2026 SENTINEL Foundation Inc. — Founded by Damon Mayo &amp; J. Whitmore<br>
-    Blockchain Verified · March 20, 2026 · Polygon Mainnet · Block 84440112<br>
-    Shared Environmental Network for Tracking Identified and Nonidentified Entities in Low-altitude
-  </div>
-  <div class="footer-usa">&#9733; Made in the USA &middot; Florida, United States &middot; Patent Pending</div>
-</footer>
-
-<script>
-  // Parallax — hero background image
-  const heroBg = document.getElementById('heroBg');
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        const heroH = document.querySelector('.hero').offsetHeight;
-        if (scrollY < heroH + 200) heroBg.style.transform = `translateY(${scrollY * 0.42}px)`;
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
-
-  // Contact form
-  const form = document.getElementById('sentinelForm');
-  const success = document.getElementById('formSuccess');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(form.action, { method:'POST', body: new FormData(form), headers:{'Accept':'application/json'} });
-      if (res.ok) { form.style.display='none'; success.style.display='block'; }
-    } catch { alert('Error — please email contact@sentinel-network.org directly.'); }
-  });
-</script>
-</body>
-</html>
